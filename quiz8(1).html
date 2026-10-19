@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>اختبار: رقمنة الصوت والصور والفيديو وتصميم البيانات</title>
+<style>
+  :root{--ink:#1c2b24;--paper:#f6f3ea;--panel:#ffffff;--line:#dfd8c4;--moss:#2f6b4f;--moss-dark:#234f3a;--clay:#b5502e;--ok:#2f6b4f;--bad:#b5502e;}
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Segoe UI","Tahoma",sans-serif;line-height:1.6;}
+  header{background:var(--moss-dark);color:#f6f3ea;padding:36px 20px 30px;text-align:center;}
+  header h1{margin:0 0 6px;font-size:26px;font-weight:700;}
+  header p{margin:0;color:#cfe3d6;font-size:14px;}
+  #progress-wrap{max-width:760px;margin:-16px auto 0;padding:0 20px;}
+  #progress-bar{height:6px;background:#e4ddc9;border-radius:4px;overflow:hidden;}
+  #progress-fill{height:100%;width:0%;background:var(--moss);transition:width .25s ease;}
+  main{max-width:760px;margin:0 auto;padding:26px 20px 60px;}
+  .intro-field{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:14px;}
+  .intro-field label{display:block;font-weight:700;margin-bottom:8px;font-size:15px;}
+  .intro-field input,.intro-field select{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:6px;font-size:15px;font-family:inherit;background:#fbfaf6;}
+  .section-title{margin:34px 0 16px;padding-bottom:8px;border-bottom:2px solid var(--moss);font-size:19px;font-weight:700;color:var(--moss-dark);}
+  .q{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin-bottom:14px;}
+  .q-text{font-weight:700;margin-bottom:12px;font-size:15.5px;direction:ltr;text-align:right;unicode-bidi:plaintext;}
+  .opt{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:7px;cursor:pointer;font-size:14.5px;border:1px solid transparent;}
+  .opt:hover{background:#f1ede0;}
+  .opt input{accent-color:var(--moss);width:16px;height:16px;flex-shrink:0;}
+  .opt.correct{background:#e3f0e8;border-color:var(--ok);font-weight:700;}
+  .opt.wrong{background:#f6e6df;border-color:var(--bad);font-weight:700;}
+  #submit-btn{display:block;width:100%;padding:16px;margin-top:22px;background:var(--moss);color:#fff;border:none;border-radius:9px;font-size:17px;font-weight:700;cursor:pointer;font-family:inherit;}
+  #submit-btn:hover{background:var(--moss-dark);}
+  #result{display:none;position:sticky;top:12px;z-index:10;background:var(--moss-dark);color:#fff;padding:18px 20px;border-radius:10px;margin-bottom:20px;text-align:center;}
+  #result h2{margin:0 0 4px;font-size:24px;}
+  #result p{margin:0;color:#cfe3d6;font-size:14px;}
+  .missing{color:var(--clay);font-size:13px;margin-top:10px;display:none;}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>الاختبار التاسع - رقمنة الصوت والصور والفيديو وتصميم البيانات</h1>
+  <p>50 سؤالًا - إجابة كل سؤال بنقطة واحدة</p>
+</header>
+
+<div id="progress-wrap"><div id="progress-bar"><div id="progress-fill"></div></div></div>
+
+<main>
+  <form id="quiz-form">
+    <div class="intro-field"><label>الاسم الثلاثي: <span style="color:var(--clay)">*</span></label><input type="text" required></div>
+    <div class="intro-field"><label>رقم الهاتف: <span style="color:var(--clay)">*</span></label><input type="tel" required></div>
+    <div class="intro-field"><label>المجموعة: <span style="color:var(--clay)">*</span></label>
+      <select required><option value="" disabled selected>اختر مجموعتك</option><option>1</option><option>2</option><option>3</option></select>
+    </div>
+
+    <div id="result"><h2 id="score-text"></h2><p>الإجابات الصحيحة باللون الأخضر، والخاطئة باللون البرتقالي</p></div>
+
+    <div id="questions"></div>
+    <p class="missing" id="missing-msg">من فضلك أجب عن جميع الأسئلة قبل التسليم.</p>
+    <button type="submit" id="submit-btn">تسليم الاختبار</button>
+  </form>
+</main>
+
+<script>
+const section1 = [
+{t:'1- الصوت ظاهرة تنتقل باهتزاز جزيئات الهواء، ويُمثَّل قبل تحويله رقميًا بموجة:', o:['رقمية (Digital)','تناظرية (Analog)','ثنائية فقط','سادس عشرية'], a:1},
+{t:'2- عدد الموجات التي تمر في ثانية واحدة، ووحدته هرتز (Hz)، يسمى:', o:['الفترة (Period)','التردد (Frequency)','القناة (Channel)','العينة'], a:1},
+{t:'3- الوقت الذي تستغرقه موجة واحدة للانتشار، ووحدته الثانية، يسمى:', o:['التردد','الفترة (Period)','العمق','معدل الإطارات'], a:1},
+{t:'4- طريقة تحويل الموجة التناظرية إلى شفرة ثنائية على ثلاث خطوات تسمى:', o:['RLE','PCM','LATCH','RGB'], a:1},
+{t:'5- أولى خطوات رقمنة الصوت بطريقة PCM، وفيها يتم تقسيم محور الزمن إلى فترات منتظمة وأخذ ارتفاع الموجة عند كل نقطة، تسمى:', o:['الترميز (Encoding)','التحويل الكمي (Quantization)','أخذ العينات (Sampling)','الضغط'], a:2},
+{t:'6- الخطوة الثانية في PCM، وفيها يتم تقريب كل ارتفاع إلى أقرب قيمة على المقياس الرأسي، وعمق الـ bit يحدد فيها عدد المستويات، تسمى:', o:['أخذ العينات','التحويل الكمي (Quantization)','الترميز','فك الضغط'], a:1},
+{t:'7- الخطوة الأخيرة في PCM، وفيها يتم التعبير عن القيم المقدَّرة كميًا في صورة ثنائية (0 و1)، تسمى:', o:['أخذ العينات','التحويل الكمي','الترميز (Encoding)','التردد'], a:2},
+{t:'8- عدد الإشارات المستخدمة عند نقل الصوت، حيث إشارة واحدة تعني أحادي (Mono) وإشارتان تعني مجسم (Stereo)، يسمى:', o:['القنوات (Channels)','التردد','العمق','العينات'], a:0},
+{t:'9- وفقًا لنظرية أخذ العينات، لإعادة بناء الموجة بدقة يجب أن يكون تردد أخذ العينات:', o:['أقل من أعلى تردد في الموجة','يساوي أعلى تردد في الموجة','أكبر من ضعف أعلى تردد في الموجة','غير مرتبط بالتردد الأعلى'], a:2},
+{t:'10- معادلة كمية بيانات الصوت في الثانية (bit) هي:', o:['تردد أخذ العينات × عدد القنوات فقط','تردد أخذ العينات × عمق الـ bit الكمي × عدد القنوات','عمق الـ bit فقط','معدل الإطارات × الوقت'], a:1},
+{t:'11- صوت أحادي (Mono) بتردد أخذ عينات 8,000 Hz وعمق 16 bit، كمية بياناته في الثانية تساوي:', o:['16,000 bit','128,000 bit','256,000 bit','8,000 bit'], a:1},
+{t:'12- عند زيادة تردد أخذ العينات وعمق الـ bit، فإن:', o:['الجودة تقل والحجم يقل','الجودة تزيد والحجم يقل','الجودة تقل والحجم يزيد','الجودة تزيد والحجم يزيد'], a:3},
+{t:'13- في صوت مجسم (Stereo) بتردد 44,100 Hz وعمق 16 bit، كمية البيانات في الثانية (bit) تحسب بالمعادلة: 44,100 × 16 × 2.', o:['صح','خطأ'], a:0},
+{t:'14- الصورة الرقمية هي ترتيب من البكسلات، ولكل بكسل قيمة رقمية تمثل:', o:['سطوعه ولونه','تردده وفترته','قناته ومعدله','ضغطه فقط'], a:0},
+{t:'15- أصغر وحدة تشكل الصورة الرقمية تسمى:', o:['الدقة','البكسل (Pixel)','التدرج','الإطار'], a:1},
+{t:'16- درجة وضوح البكسلات، ووحدتها dpi (نقطة لكل بوصة)، تسمى:', o:['الدقة (Resolution)','التدرج','البكسل','التجريد'], a:0},
+{t:'17- مستوى كثافة اللون لكل بكسل، ويتحدد بعدد الـ bits، يسمى:', o:['البكسل','الدقة','التدرج (Gradation)','الفريم'], a:2},
+{t:'18- في حالة استخدام 8 bit لكل بكسل، عدد التدرجات الممكنة يكون:', o:['128 تدرجًا','256 تدرجًا (من 0 إلى 255)','64 تدرجًا','16 تدرجًا'], a:1},
+{t:'19- خطوات رقمنة الصور هي بالترتيب:', o:['الترميز، ثم أخذ العينات، ثم التقدير الرقمي','أخذ العينات، ثم التقدير الرقمي (Quantization)، ثم الترميز','التقدير الرقمي، ثم الترميز، ثم أخذ العينات','لا يوجد ترتيب محدد'], a:1},
+{t:'20- معادلة حجم بيانات الصورة (bit) هي:', o:['(بكسلات رأسي × بكسلات أفقي) × عدد bits معلومات اللون','بكسلات رأسي فقط','معدل الإطارات × الوقت','تردد أخذ العينات × القنوات'], a:0},
+{t:'21- صورة بأبعاد 1,280 × 720 بكسل وبعمق لون 24 bit، حجم بياناتها بالبت يساوي:', o:['921,600 bit','9,216,000 bit','22,118,400 bit','2,211,840 bit'], a:2},
+{t:'22- التنسيق الذي يتكون من شبكة من النقاط (pixels)، وتظهر فيه التعرجات (Jaggies) عند التكبير، ويُستخدم في برامج مثل Photoshop، يسمى:', o:['النقطي (Raster)','المتجه (Vector)','الهرمي','الرقمي فقط'], a:0},
+{t:'23- التنسيق الذي يعتمد على إحداثيات النقاط والزوايا وسمك الخطوط، وتبقى فيه الصورة واضحة عند التكبير، ويُستخدم في برامج مثل Illustrator، يسمى:', o:['النقطي','المتجه (Vector)','الهرمي','التناظري'], a:1},
+{t:'24- تمثيل اللون الجمعي (Additive)، حيث أحمر + أخضر + أزرق ← أبيض، يُستخدم في:', o:['الطابعات الملونة','التلفزيونات وشاشات الكمبيوتر','الطباعة فقط','الصبغات فقط'], a:1},
+{t:'25- تمثيل اللون الطرحي (Subtractive)، حيث سماوي + أرجواني + أصفر ← أسود، يُستخدم في:', o:['شاشات الكمبيوتر','التلفزيونات','الطابعات الملونة (ألوان الصبغة)','الإضاءة فقط'], a:2}
+];
+
+const section2 = [
+{t:'26- في الألوان الكاملة (Full color)، كل لون من الأحمر والأخضر والأزرق يُمثَّل بـ 256 مستوى (8 bit)، فيكون إجمالي عدد البتات:', o:['8 bit','16 bit','24 bit','32 bit'], a:2},
+{t:'27- الفيديو سلسلة صور ثابتة تُعرض بسرعة، فتخدع العين بوهم الحركة بسبب ظاهرة تسمى:', o:['انكسار الضوء','الصورة الباقية في الرؤية البشرية','الرنين الصوتي','التحويل الكمي'], a:1},
+{t:'28- صورة واحدة من سلسلة الصور المتتابعة التي تُعرض بسرعة في الفيديو تسمى:', o:['البكسل','الإطار (Frame)','القناة','التدرج'], a:1},
+{t:'29- عدد الإطارات في الثانية، ووحدته fps، يسمى:', o:['معدل الإطارات (Frame rate)','التردد','العمق','الدقة'], a:0},
+{t:'30- كلما زاد معدل الإطارات (fps)، يصبح الفيديو:', o:['أنعم وأكبر حجمًا','أقل سلاسة وأصغر حجمًا','أنعم وأصغر حجمًا','لا تتغير الجودة ولا الحجم'], a:0},
+{t:'31- معادلة حجم بيانات الفيديو هي:', o:['حجم الصورة (B) × معدل الإطارات (fps) × الوقت (ثانية)','حجم الصورة فقط','معدل الإطارات فقط','تردد العينات × العمق'], a:0},
+{t:'32- فيديو مدته 10 ثوانٍ، بمعدل 30 fps، وحجم كل إطار 300,000 بايت، حجم الفيديو الإجمالي يساوي:', o:['9 MB','90 MB','900 KB','30 MB'], a:1},
+{t:'33- تقليل حجم البيانات قدر الإمكان مع الحفاظ على المحتوى يسمى:', o:['فك الضغط','الضغط (Compression)','الترميز','التحويل الكمي'], a:1},
+{t:'34- استعادة البيانات المضغوطة إلى حالتها الأصلية تسمى:', o:['الضغط','فك الضغط (Decompression)','الترميز','التدرج'], a:1},
+{t:'35- نسبة الضغط تُحسب بالمعادلة:', o:['الحجم بعد الضغط ÷ الحجم الأصلي × 100','الحجم الأصلي ÷ الحجم بعد الضغط','الحجم الأصلي × الحجم بعد الضغط','الحجم بعد الضغط - الحجم الأصلي'], a:0},
+{t:'36- حجم 200 MB أصبح 50 MB بعد الضغط، فإن نسبة الضغط تساوي:', o:['4%','400%','75%','25%'], a:3},
+{t:'37- نوع الضغط الذي يسمح باستعادة البيانات الأصلية بالكامل، ويُستخدم للنصوص والبرامج، يسمى:', o:['الضغط الفاقد (Lossy)','الضغط غير الفاقد (Lossless)','ضغط RLE فقط','ضغط هوفمان فقط'], a:1},
+{t:'38- نوع الضغط الذي لا يمكن استعادة البيانات الأصلية منه بالكامل، ويُستخدم للصوت والصور والفيديو، يسمى:', o:['الضغط غير الفاقد','الضغط الفاقد (Lossy)','فك الضغط','الترميز'], a:1},
+{t:'39- طريقة ضغط تستبدل الرموز المتطابقة المتتالية بقيمة تدل على طول التسلسل تسمى:', o:['ترميز هوفمان','ترميز طول التشغيل (Run-length encoding)','PCM','LATCH'], a:1},
+{t:'40- باستخدام ترميز طول التشغيل (RLE)، النص "AAAAABB" يُضغط إلى:', o:['A5B2','A2B5','5A2B','AB52'], a:0},
+{t:'41- طريقة ضغط تستخدم تسلسلات bit أقصر للأحرف الأكثر تكرارًا، وأطول للأحرف الأقل تكرارًا، تسمى:', o:['ترميز طول التشغيل','ترميز هوفمان (Huffman coding)','PCM','التحويل الكمي'], a:1},
+{t:'42- نقل البيانات المقصودة ببساطة من بين كمية كبيرة من البيانات، بأمثلة مثل الرسم التصويري والأيقونة، يسمى:', o:['التجريد (Abstraction)','التصور','الهيكلة','الترميز'], a:0},
+{t:'43- تمثيل البيانات بصريًا لتصبح أسهل فهمًا، بأمثلة مثل الجداول والرسوم البيانية، يسمى:', o:['التجريد','التصور (Visualization)','الهيكلة','الدقة'], a:1},
+{t:'44- تنظيم البيانات وفق العلاقات والمستويات والمراحل، بأمثلة مثل القوائم الهرمية وخرائط المتاجر، يسمى:', o:['التجريد','التصور','الهيكلة (Structuring)','التدرج'], a:2},
+{t:'45- نظام لنقل البيانات بين البشر والأجهزة، يشمل أوامر لوحة المفاتيح (CUI) والرموز والأزرار البديهية (GUI)، يسمى:', o:['واجهة المستخدم (UI)','تجربة المستخدم (UX)','الإمكانية','الدلالة'], a:0},
+{t:'46- الخبرة أو التأثير العاطفي الذي يكتسبه المستخدم من التفاعل مع منتج أو خدمة تسمى:', o:['واجهة المستخدم (UI)','تجربة المستخدم (UX)','إمكانية الوصول','التصميم الشامل'], a:1},
+{t:'47- الإجراءات التي يمكن تنفيذها على كائن ما تسمى الإمكانية (Affordance)، بينما الإشارات التي تدفع المستخدم لاتخاذ إجراء تسمى:', o:['الدلالة (Signifier)','التجريد','الهيكلة','التصور'], a:0},
+{t:'48- تصميم يستطيع جميع الناس استخدامه دون صعوبة، بغض النظر عن العمر أو اللغة أو الجنسية أو القدرة الجسدية، يسمى:', o:['قابلية الاستخدام','إمكانية الوصول','التصميم الشامل (Universal design)','تجربة المستخدم'], a:2},
+{t:'49- مبدأ يصنف البيانات بخمس طرق: الموقع، الأبجدية، الوقت، الفئة، والهرمية، يسمى:', o:['LATCH','PCM','RLE','RGB'], a:0},
+{t:'50- في مبدأ LATCH، التصنيف حسب تسلسل الأحداث زمنيًا يمثل حرف:', o:['L (الموقع)','A (الأبجدية)','T (الوقت)','H (الهرمية)'], a:2}
+];
+
+const allQuestions = section1.concat(section2);
+const container = document.getElementById('questions');
+const letters = ['أ','ب','ج','د'];
+
+function renderSection(title, list, startIndex){
+  const h = document.createElement('div');
+  h.className='section-title'; h.textContent=title;
+  container.appendChild(h);
+  list.forEach((q,i)=>{
+    const idx=startIndex+i;
+    const box=document.createElement('div');
+    box.className='q'; box.dataset.index=idx;
+    const qt=document.createElement('div');
+    qt.className='q-text'; qt.textContent=q.t;
+    box.appendChild(qt);
+    q.o.forEach((opt,oi)=>{
+      const label=document.createElement('label');
+      label.className='opt';
+      label.innerHTML=`<input type="radio" name="q${idx}" value="${oi}"> ${q.o.length>2? letters[oi]+') ':''}${opt}`;
+      box.appendChild(label);
+    });
+    container.appendChild(box);
+  });
+}
+
+renderSection('القسم الأول: رقمنة الصوت ورقمنة الصور وتمثيل اللون (1–25)', section1, 0);
+renderSection('القسم الثاني: الفيديو وضغط البيانات وتصميم البيانات (26–50)', section2, 25);
+
+container.addEventListener('change',()=>{
+  const answered=document.querySelectorAll('#questions input[type=radio]:checked').length;
+  document.getElementById('progress-fill').style.width=(answered/allQuestions.length*100)+'%';
+});
+
+document.getElementById('quiz-form').addEventListener('submit',function(e){
+  e.preventDefault();
+  const answered=document.querySelectorAll('#questions input[type=radio]:checked').length;
+  const missingMsg=document.getElementById('missing-msg');
+  if(answered<allQuestions.length){missingMsg.style.display='block';return;}
+  missingMsg.style.display='none';
+  let score=0;
+  allQuestions.forEach((q,idx)=>{
+    const box=document.querySelector(`.q[data-index="${idx}"]`);
+    const chosen=document.querySelector(`input[name="q${idx}"]:checked`);
+    const chosenVal=parseInt(chosen.value);
+    box.querySelectorAll('.opt').forEach((optEl,oi)=>{
+      if(oi===q.a) optEl.classList.add('correct');
+      if(oi===chosenVal && chosenVal!==q.a) optEl.classList.add('wrong');
+    });
+    if(chosenVal===q.a) score++;
+  });
+  document.getElementById('score-text').textContent=`النتيجة: ${score} من ${allQuestions.length}`;
+  document.getElementById('result').style.display='block';
+  const btn=document.getElementById('submit-btn');
+  btn.disabled=true; btn.textContent='تم التسليم'; btn.style.background='#8a8578';
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+</script>
+</body>
+</html>
